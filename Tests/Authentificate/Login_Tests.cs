@@ -1,3 +1,4 @@
+using HomeWork.Core;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
@@ -5,44 +6,27 @@ using OpenQA.Selenium.Edge;
 namespace HomeWork.Authentificate;
 
 /// <summary>
-/// Тест сайта https://www.saucedemo.com/
+///     Тест сайта https://www.saucedemo.com/
 /// </summary>
 public class LoginTests
 {
     /// <summary>
-    /// Url авторизации
-    /// </summary>
-    private const string UrlAuth = "https://www.saucedemo.com/";
-
-    private const string UrlProducts = "https://www.saucedemo.com/inventory.html";
-    
-    /// <summary>
-    /// Имя пользователя корректное
-    /// </summary>
-    private const string UserNameValid = "performance_glitch_user";
-    
-    /// <summary>
-    /// Пароль корректный
-    /// </summary>
-    private const string PasswordValid = "secret_sauce";
-    
-    /// <summary>
-    /// Имя пользователя некорректное
+    ///     Имя пользователя некорректное
     /// </summary>
     private const string UserNameInvalid = "111111111";
-    
+
     /// <summary>
-    /// Пароль некорректный
+    ///     Пароль некорректный
     /// </summary>
     private const string PasswordInvalid = "111111111";
 
     /// <summary>
-    /// Драйвер который будет использоваться в тестах
+    ///     Драйвер который будет использоваться в тестах
     /// </summary>
     private IWebDriver _driver;
 
     /// <summary>
-    /// Установка запускаемого пула тестов
+    ///     Установка запускаемого пула тестов
     /// </summary>
     [SetUp]
     public void Setup()
@@ -51,79 +35,79 @@ public class LoginTests
     }
 
     /// <summary>
-    /// Тест на успешный ввод кридов
+    ///     Тест на успешный ввод кридов
     /// </summary>
     [Test]
     public void Authenticate_Success()
     {
-        _driver.Navigate().GoToUrl(UrlAuth);
-        
+        _driver.Navigate().GoToUrl(Utils.UrlAuth);
+
         var elementLogin = _driver.FindElement(By.XPath("//input[@name='user-name']"));
         var elementPassword = _driver.FindElement(By.XPath("//input[@name='password']"));
         var elementSubmitButton = _driver.FindElement(By.XPath("//input[@name='login-button']"));
-        
-        elementLogin.SendKeys(UserNameValid);
-        elementPassword.SendKeys(PasswordValid);
+
+        elementLogin.SendKeys(Utils.UserNameValid);
+        elementPassword.SendKeys(Utils.PasswordValid);
 
         elementSubmitButton.Click();
-        
-        Assert.That(_driver.Url, Is.EqualTo(UrlProducts));
+
+        Assert.That(_driver.Url, Is.EqualTo(Utils.UrlProducts));
     }
-    
+
     /// <summary>
-    /// Тест на неуспешный ввод логина
+    ///     Тест на неуспешный ввод логина
     /// </summary>
     [Test]
     public void Authenticate_Fail_Username()
     {
-        _driver.Navigate().GoToUrl(UrlAuth);
-        
+        _driver.Navigate().GoToUrl(Utils.UrlAuth);
+
         var elementLogin = _driver.FindElement(By.XPath("//input[@name='user-name']"));
         var elementPassword = _driver.FindElement(By.XPath("//input[@name='password']"));
         var elementSubmitButton = _driver.FindElement(By.XPath("//input[@name='login-button']"));
-        
+
         elementLogin.SendKeys(UserNameInvalid);
-        elementPassword.SendKeys(PasswordValid);
+        elementPassword.SendKeys(Utils.PasswordValid);
 
         elementSubmitButton.Click();
-        
-        Assert.That(_driver.Url, Is.EqualTo(UrlAuth));
+
+        Assert.That(_driver.Url, Is.EqualTo(Utils.UrlAuth));
     }
-    
+
     /// <summary>
-    /// Тест на неуспешный ввод пароля
+    ///     Тест на неуспешный ввод пароля
     /// </summary>
     [Test]
     public void Authenticate_Fail_Password()
     {
-        _driver.Navigate().GoToUrl(UrlAuth);
-        
+        _driver.Navigate().GoToUrl(Utils.UrlAuth);
+
         var elementLogin = _driver.FindElement(By.XPath("//input[@name='user-name']"));
         var elementPassword = _driver.FindElement(By.XPath("//input[@name='password']"));
         var elementSubmitButton = _driver.FindElement(By.XPath("//input[@name='login-button']"));
-        
-        elementLogin.SendKeys(UserNameValid);
+
+        elementLogin.SendKeys(Utils.UserNameValid);
         elementPassword.SendKeys(PasswordInvalid);
 
         elementSubmitButton.Click();
-        
-        Assert.That(_driver.Url, Is.EqualTo(UrlAuth));
+
+        Assert.That(_driver.Url, Is.EqualTo(Utils.UrlAuth));
     }
 
     /// <summary>
-    /// Тест на успешный ввод кридов и поиск по локаторам
+    ///     Тест на успешный ввод кридов и поиск по локаторам
     /// </summary>
     [Test]
     public void Locators_Test_Success()
     {
-        _driver.Navigate().GoToUrl(UrlAuth);
-        
+        _driver.Navigate().GoToUrl(Utils.UrlAuth);
+
         var elementLogin = _driver.FindElement(By.XPath("//input[@name='user-name']"));
         var elementPassword = _driver.FindElement(By.XPath("//input[@name='password']"));
         var elementSubmitButton = _driver.FindElement(By.XPath("//input[@name='login-button']"));
-        
-        elementLogin.SendKeys(UserNameValid);
-        elementPassword.SendKeys(PasswordValid);
+
+        elementLogin.SendKeys(Utils.UserNameValid);
+        elementPassword.SendKeys(Utils.PasswordValid);
 
         elementSubmitButton.Click();
 
@@ -136,7 +120,7 @@ public class LoginTests
         var elementLink = _driver.FindElement(By.LinkText("LinkedIn"));
         var elementPartLink = _driver.FindElement(By.PartialLinkText("Linked"));
 
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(elementId.TagName, Is.Not.Null);
